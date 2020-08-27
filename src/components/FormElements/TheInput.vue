@@ -1,6 +1,6 @@
 <template>
   <div class="input">
-    <input class="input__input"/>
+    <input class="input__input" required/>
     <span class="input__label">{{ label }}</span>
   </div>
 </template>
@@ -22,35 +22,40 @@ export default {
   position: relative;
 
   &__input {
-    padding: 10px;
-    position: relative;
+    width: 10%;
+    padding: 10px 0 5px;
     background-color: transparent;
-    border-bottom: 2px solid gray;
-    z-index: 0;
+    border: none;
+    border-bottom: thin solid gray;
+    font-size: 14px;
+    font-family: inherit;
+
+    &:hover {
+      border-color: black;
+    }
 
     &:focus {
-      border-color: rgb(152, 152, 153);
-      opacity: .99;
+      border-color: mediumblue;
       outline: none;
     }
   }
 
   &__label {
     position: absolute;
-    left: 10px;
+    left: 0;
     top: 50%;
-    transform: translateY(-50%) scale(.9);
+    transform: translateY(-50%);
     color: gray;
     transition: all .2s ease;
     z-index: 1;
     pointer-events: none;
   }
 
-  &__input:focus + &__label {
-    color: blue;
+  &__input:focus + &__label,
+  &__input:valid + &__label {
+    color: mediumblue;
     top: 0;
-    left: 5px;
-    transform: translateY(-50%) scale(1);
+    font-size: 14px;
   }
 }
 </style>
