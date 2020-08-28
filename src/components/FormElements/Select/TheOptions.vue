@@ -1,10 +1,12 @@
 <template>
-  <div class="input-options">
-    <button 
-      v-for="(item, i) in data" 
-      :key="i" 
-      class="input-options__item"
-      @click="setActiveValue(item)">
+  <div class="select-options">
+    <button
+      v-for="(item, i) in optionValues"
+      :key="i"
+      class="select-options__item"
+      :class="classActiveValue(item)"
+      @click="setActiveValue(item)"
+    >
       {{ item }}
     </button>
   </div>
@@ -13,21 +15,37 @@
 <script>
 export default {
   props: {
-    data: {
+    optionValues: {
       type: Array,
       required: true,
     },
+    activeValue: String,
+    activeValues: Array,
+    multiple: Boolean
   },
   methods: {
-    setActiveValue(value) {
-      this.$emit('update:activeValue',value)
+    setActiveValue(item) {
+      if (!this.multiple) {
+        this.$emit("update:activeValue", item);
+      } else {
+        this.$emit("update:multipleActiveValues", item);
+      }
+      
+    },
+    classActiveValue(item) {
+      if (!this.multiple) {
+        return this.activeValue === item ? 'select-options__item--active' : '';
+      } else {
+        return this.activeValues.includes(item) ? "select-options__item--active" : "";
+      }
+      
     }
-  }
+  },
 };
 </script>
 
 <style lang="scss">
-.input-options {
+.select-options {
   position: absolute;
   top: 0;
   left: 0;
@@ -35,7 +53,8 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 5px 0;
-  width: 10%;
+  width: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   z-index: 1;
 
   &__item {
@@ -50,7 +69,18 @@ export default {
 
     &:hover,
     &:focus {
-      background-color: #F6F6F6;
+      background-color: #f6f6f6;
+    }
+
+    &--active {
+      color: #1867c0;
+      background-color: #e4edf8;
+
+      &:hover,
+      &:focus {
+        color: #1867c0;
+        background-color: #e4edf8;
+      }
     }
   }
 }
