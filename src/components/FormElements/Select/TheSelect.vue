@@ -4,19 +4,22 @@
       type="text"
       readonly
       class="input__input input__select"
-      :value="activeValue"
       @click="toogleOptions"
-      v-click-outside="hideOptions"
+      @keydown.space="toogleOptions"
+      :value="getActiveValue"
+      v-click-outside:[optionValues]="hideOptions"
     />
-    <span
-      class="input__label"
-      :class="activeValue ? 'input__label--isUp' : ''">
-      {{label}}
+    <span class="input__label" :class="classLabelActive">
+      {{ label }}
     </span>
     <TheOptions
-      :data="data"
-      v-show="isShowOptions"
+      :optionValues="optionValues"
+      :activeValue="activeValue"
+      :activeValues="multipleActiveValues"
+      :multiple="multiple"
       @update:activeValue="setActiveValue"
+      @update:multipleActiveValues="pushActiveValues"
+      v-if="isShowOptions"
     />
   </div>
 </template>
@@ -27,20 +30,35 @@ import TheOptions from "./TheOptions";
 export default {
   name: "TheSelect",
   props: {
-    data: {
+    optionValues: {
       type: Array,
       required: true,
     },
     label: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
+    multiple: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
       isShowOptions: false,
       activeValue: "",
+      multipleActiveValues: [],
     };
+  },
+  computed: {
+    getActiveValue() {
+      return !this.multiple ? this.activeValue : this.multipleActiveValues;
+    },
+    classLabelActive() {
+      return this.activeValue || this.multipleActiveValues.length
+        ? "input__label--isUp"
+        : "";
+    },
   },
   methods: {
     toogleOptions() {
@@ -50,9 +68,19 @@ export default {
       this.activeValue = value;
       this.isShowOptions = false;
     },
+    pushActiveValues(value) {
+      if (this.multipleActiveValues.includes(value)) {
+        this.multipleActiveValues.splice(
+          this.multipleActiveValues.indexOf(value),
+          1
+        );
+      } else {
+        this.multipleActiveValues.push(value);
+      }
+    },
     hideOptions() {
       this.isShowOptions = false;
-    }
+    },
   },
   components: {
     TheOptions,
@@ -65,6 +93,7 @@ export default {
   &__select {
     cursor: pointer;
     font-size: 16px;
+    text-align: left;
   }
   &__label--isUp {
     top: 0;
