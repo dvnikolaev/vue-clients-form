@@ -22,7 +22,7 @@ export default {
   position: relative;
 
   &__input {
-    width: 10%;
+    width: 100%;
     padding: 10px 0 5px;
     background-color: transparent;
     border: none;
