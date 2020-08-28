@@ -20,6 +20,7 @@ export default {
 <style lang="scss">
 .input {
   position: relative;
+  margin: 10px 0;
 
   &__input {
     width: 100%;
