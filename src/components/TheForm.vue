@@ -2,7 +2,7 @@
   <div class="form__wrapper">
     <form @submit.prevent="">
       <!-- <TheInput :label="'Имя'" /> -->
-      <TheSelect :data="gender" label="Пол"/>
+      <TheSelect :optionValues="gender" label="Пол" :multiple="true"/>
     </form>
   </div>
 </template>
@@ -27,3 +27,13 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .form__wrapper {
+    background-color: white;
+    border-radius: 10px;
+    height: 300px;
+    width: 300px;
+    padding: 10px;
+  }
+</style>
