@@ -3,17 +3,32 @@ import App from "./App.vue";
 
 Vue.config.productionTip = false;
 
-Vue.directive('click-outside', {
+Vue.directive("click-outside", {
   bind(el, binding, vnode) {
-    el.clickOutside = function (event) {
+    el.clickOutside = function(event) {
+      event.stopPropagation();
+
+      let currentSelect = 
+        el.parentElement
+        .getElementsByClassName("select-options")[0];
+
       if (el !== event.target || !el.contains(event.target)) {
-        vnode.context[binding.expression](event);
+        if (binding.arg) {
+          if (currentSelect) {
+            if (!currentSelect.contains(event.target)) {
+              vnode.context[binding.expression](event);
+            }
+          }
+        } else {
+          vnode.context[binding.expression](event);
+        }
       }
     };
-    document.body.addEventListener('click', el.clickOutside)
+
+    document.body.addEventListener("click", el.clickOutside);
   },
   unbind(el) {
-    document.body.removeEventListener('click', el.clickOutside)
+    document.body.removeEventListener("click", el.clickOutside);
   },
 });
 
