@@ -8,7 +8,12 @@
       fieldName="groups"
       @change:formValue="changeFormValue"
     />
-    <TheSelect :optionValues="doctors" label="Лечащий врач" />
+    <TheSelect
+      :optionValues="doctors"
+      :formValue="doctor"
+      fieldName="doctor"
+      label="Лечащий врач"
+      @change:formValue="changeFormValue" />
     <TheCheckbox label="Не отправлять СМС" />
   </div>
 </template>
@@ -19,8 +24,8 @@ import TheCheckbox from "../../FormElements/TheCheckbox";
 
 export default {
   props: {
-    groups: "",
-    doctor: "",
+    groups: String,
+    doctor: String,
   },
   data() {
     return {
