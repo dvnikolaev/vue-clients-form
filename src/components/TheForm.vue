@@ -15,9 +15,16 @@
         :isSendSMS="formValues.isSendSMS"
         @change:formValue="changeFormValue"
       />
-      <!-- <TheInput :label="'Имя'" /> -->
-      <!-- <TheSelect :optionValues="gender" label="Пол" :multiple="true"/> -->
-      <!-- <TheCheckbox label="Не отправлять СМС"/> -->
+      <TheAddress
+        v-if="activePage == 4"
+        :index="formValues.index"
+        :country="formValues.country"
+        :region="formValues.region"
+        :city="formValues.city"
+        :street="formValues.street"
+        :home="formValues.home"
+        @change:formValue="changeFormValue"
+      />
     </form>
     <FormButtons
       :activePage="activePage"
@@ -30,13 +37,16 @@
 </template>
 
 <script>
-import { required, minLength, maxLength, numeric } from "vuelidate/lib/validators";
+import {
+  required,
+  minLength,
+  maxLength,
+  numeric,
+} from "vuelidate/lib/validators";
 
 import TheClientInfo from "./FormParts/ClientInfo/TheClientInfo";
+import TheAddress from "./FormParts/Address/TheAddress";
 import FormButtons from "./FormParts/FormButtons/FormButtons";
-import TheInput from "./FormElements/TheInput";
-import TheSelect from "./FormElements/Select/TheSelect";
-import TheCheckbox from "./FormElements/TheCheckbox";
 
 const isSevenFirst = (value) => value.indexOf(7) == 0;
 
@@ -44,7 +54,7 @@ export default {
   name: "TheForm",
   data() {
     return {
-      activePage: 1,
+      activePage: 4,
       formValues: {
         firstName: "",
         lastName: "",
@@ -55,6 +65,12 @@ export default {
         groups: "",
         doctor: "",
         isSendSMS: false,
+        index: "",
+        country: "",
+        region: "",
+        city: "",
+        street: "",
+        home: ""
       },
     };
   },
@@ -76,6 +92,12 @@ export default {
         numeric,
         isSevenFirst,
       },
+      groups: {
+        required
+      },
+      city: {
+        required
+      }
     },
   },
   computed: {
@@ -89,8 +111,14 @@ export default {
         }
         case 2: {
           return this.$v.formValues.birthday.$invalid ||
-          this.$v.formValues.phone.$invalid ? true : false
+            this.$v.formValues.phone.$invalid
+            ? true
+            : false;
         }
+        case 3:
+          return this.$v.formValues.groups.$invalid ? true : false;
+        case 4:
+          return this.$v.formValues.city.$invalid ? true : false
       }
     },
   },
@@ -101,7 +129,7 @@ export default {
       }
     },
     toNextPage() {
-      if (this.activePage < 6) {
+      if (this.activePage < 5) {
         this.activePage++;
       }
     },
@@ -111,9 +139,7 @@ export default {
   },
   components: {
     TheClientInfo,
-    TheInput,
-    TheSelect,
-    TheCheckbox,
+    TheAddress,
     FormButtons,
   },
 };
