@@ -11,7 +11,7 @@
         :phone="formValues.phone"
         :gender="formValues.gender"
         :groups="formValues.groups"
-        :doctor="formValues.doctor" 
+        :doctor="formValues.doctor"
         @change:formValue="changeFormValue"/>
       <!-- <TheInput :label="'Имя'" /> -->
       <!-- <TheSelect :optionValues="gender" label="Пол" :multiple="true"/> -->
@@ -45,7 +45,7 @@ export default {
         birthday: '',
         phone: '',
         gender: '',
-        groups: [],
+        groups: "",
         doctor: ''
       }
     };
