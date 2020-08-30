@@ -7,11 +7,11 @@
     >
       Назад
     </button>
-    <span class="count-page">{{ activePage }} из 6</span>
+    <span class="count-page">{{ activePage }} из 5</span>
     <button
       class="button button--next"
       @click="toNextPage"
-      v-if="activePage < 6"
+      v-if="activePage < 5"
       :disabled="isDisable"
     >
       Далее
