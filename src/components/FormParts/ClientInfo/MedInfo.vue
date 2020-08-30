@@ -54,6 +54,7 @@ export default {
   },
   methods: {
     changeFormValue({ fieldName, formValue }) {
+      this.$v[fieldName] ? this.$v[fieldName].$touch() : null;
       this.$emit("change:formValue", { fieldName, formValue });
     },
   },
