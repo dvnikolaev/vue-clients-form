@@ -26,7 +26,6 @@
       :isDisable="isDisable"
     />
     <span class="form__text">* - поля необходимые для заполнения</span>
-    {{ $v.formValues.phone.$invalid }}
   </div>
 </template>
 
