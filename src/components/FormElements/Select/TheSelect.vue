@@ -6,7 +6,7 @@
       class="input__input input__select"
       @click="toogleOptions"
       @keydown.space="toogleOptions"
-      :value="getActiveValue"
+      v-model="values"
       v-click-outside:[optionValues]="hideOptions"
     />
     <span class="input__label" :class="classLabelActive">
@@ -53,6 +53,14 @@ export default {
   computed: {
     getActiveValue() {
       return !this.multiple ? this.activeValue : this.multipleActiveValues;
+    },
+    values: {
+      get() {
+        return this.getActiveValue;
+      },
+      set(val) {
+        this.$emit('asdasd', val)
+      }
     },
     classLabelActive() {
       return this.activeValue || this.multipleActiveValues.length
