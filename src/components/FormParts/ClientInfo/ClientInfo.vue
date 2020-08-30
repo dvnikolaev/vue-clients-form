@@ -14,7 +14,13 @@
         @change:formValue="changeFormValue"
       />
     </div>
-    <TheSelect label="Пол" :optionValues="optionValues" @asdasd="asdasd"/>
+    <TheSelect
+      label="Пол"
+      :optionValues="optionValues"
+      :formValue="gender"
+      fieldName="gender"
+      @change:formValue="changeFormValue"
+    />
   </div>
 </template>
 
@@ -37,9 +43,6 @@ export default {
     changeFormValue({ fieldName, formValue }) {
       this.$emit("change:formValue", { fieldName, formValue });
     },
-    asdasd(val) {
-      console.log(val);
-    }
   },
   components: {
     TheInput,
