@@ -7,7 +7,6 @@
       @click="toogleOptions"
       @keydown.space="toogleOptions"
       :value="formValue"
-      @change="asdasd($event)"
       v-click-outside:[optionValues]="hideOptions"
     />
     <span class="input__label" :class="classLabelActive">
