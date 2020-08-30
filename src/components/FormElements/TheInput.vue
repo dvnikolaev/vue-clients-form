@@ -1,11 +1,6 @@
 <template>
   <div class="input">
-    <input
-      class="input__input"
-      required
-      :value="formValue"
-      @input="changeFormValue($event)"
-    />
+    <input class="input__input" required v-model.trim="inputValue" />
     <span class="input__label">{{ label }}</span>
   </div>
 </template>
@@ -19,13 +14,20 @@ export default {
       required: true,
     },
     formValue: String,
-    fieldName: String
+    fieldName: String,
   },
-  computed: {},
-  methods: {
-    changeFormValue(e) {
-      this.$emit('change:formValue', { fieldName: this.fieldName, formValue: e.target.value.trim() });
-    }
+  computed: {
+    inputValue: {
+      get() {
+        return this.formValue;
+      },
+      set(value) {
+        this.$emit("change:formValue", {
+          fieldName: this.fieldName,
+          formValue: value,
+        });
+      },
+    },
   },
 };
 </script>
