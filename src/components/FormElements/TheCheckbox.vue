@@ -39,6 +39,7 @@ export default {
 <style lang="scss">
 .checkbox {
   display: flex;
+  margin-top: 15px;
 
   &__label {
     margin-left: 5px;
