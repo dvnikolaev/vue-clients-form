@@ -1,52 +1,44 @@
 <template>
   <div>
-    <div class="row">
-      <TheInput
-        label="Индекс"
-        :formValue="index"
-        fieldName="index"
-        @change:formValue="changeFormValue"
-      />
-      <TheInput
-        label="Страна"
-        :formValue="country"
-        fieldName="country"
-        @change:formValue="changeFormValue"
-      />
-    </div>
-    <div class="row">
-      <TheInput
-        label="Область"
-        :formValue="region"
-        fieldName="region"
-        @change:formValue="changeFormValue"
-      />
-      <TheInput
-        label="Город *"
-        :formValue="city"
-        fieldName="city"
-        @change:formValue="changeFormValue"
-      />
-      <span 
-        class="input__err"
-        v-if="!$v.city.required && $v.city.$dirty">
-        Данное поле необходимо заполнить
-      </span>
-    </div>
-    <div class="row">
-      <TheInput
-        label="Улица"
-        :formValue="street"
-        fieldName="street"
-        @change:formValue="changeFormValue"
-      />
-      <TheInput
-        label="Дом"
-        :formValue="home"
-        fieldName="home"
-        @change:formValue="changeFormValue"
-      />
-    </div>
+    <TheInput
+      label="Индекс"
+      :formValue="index"
+      fieldName="index"
+      @change:formValue="changeFormValue"
+    />
+    <TheInput
+      label="Страна"
+      :formValue="country"
+      fieldName="country"
+      @change:formValue="changeFormValue"
+    />
+    <TheInput
+      label="Область"
+      :formValue="region"
+      fieldName="region"
+      @change:formValue="changeFormValue"
+    />
+    <TheInput
+      label="Город *"
+      :formValue="city"
+      fieldName="city"
+      @change:formValue="changeFormValue"
+    />
+    <span class="input__err" v-if="!$v.city.required && $v.city.$dirty">
+      Данное поле необходимо заполнить
+    </span>
+    <TheInput
+      label="Улица"
+      :formValue="street"
+      fieldName="street"
+      @change:formValue="changeFormValue"
+    />
+    <TheInput
+      label="Дом"
+      :formValue="home"
+      fieldName="home"
+      @change:formValue="changeFormValue"
+    />
   </div>
 </template>
 
@@ -66,8 +58,8 @@ export default {
   },
   validations: {
     city: {
-      required
-    }
+      required,
+    },
   },
   methods: {
     changeFormValue({ fieldName, formValue }) {
