@@ -2,7 +2,17 @@
   <div class="form__wrapper">
     <h2 class="form__header">Регистрация клиента</h2>
     <form @submit.prevent="">
-      <TheClientInfo :activePage="activePage"/>
+      <TheClientInfo 
+        :activePage="activePage"
+        :firstName="formValues.firstName"
+        :lastName="formValues.lastName"
+        :middleName="formValues.middleName"
+        :birthday="formValues.birthday"
+        :phone="formValues.phone"
+        :gender="formValues.gender"
+        :groups="formValues.groups"
+        :doctor="formValues.doctor" 
+        @change:formValue="changeFormValue"/>
       <!-- <TheInput :label="'Имя'" /> -->
       <!-- <TheSelect :optionValues="gender" label="Пол" :multiple="true"/> -->
       <!-- <TheCheckbox label="Не отправлять СМС"/> -->
@@ -27,7 +37,17 @@ export default {
   name: "TheForm",
   data() {
     return {
-      activePage: 1
+      activePage: 1,
+      formValues: {
+        firstName: '',
+        lastName: '',
+        middleName: '',
+        birthday: '',
+        phone: '',
+        gender: '',
+        groups: [],
+        doctor: ''
+      }
     };
   },
   methods: {
@@ -40,6 +60,9 @@ export default {
       if (this.activePage < 6) {
         this.activePage++;
       }
+    },
+    changeFormValue({ fieldName, formValue }) {
+      this.formValues[fieldName] = formValue;
     }
   },
   components: {
