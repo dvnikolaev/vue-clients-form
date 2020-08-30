@@ -16,6 +16,13 @@
     >
       Далее
     </button>
+    <button
+      class="button button--finish"
+      @click="completeSignUp"
+      v-if="activePage == 5"
+      :disabled="isDisableFinishButton">
+      Готово
+    </button>
   </div>
 </template>
 
@@ -23,7 +30,8 @@
 export default {
   props: {
     activePage: Number,
-    isDisable: Boolean
+    isDisable: Boolean,
+    isDisableFinishButton: Boolean
   },
   methods: {
     toPrevPage() {
@@ -32,6 +40,9 @@ export default {
     toNextPage() {
       this.$emit("change:toNextPage");
     },
+    completeSignUp() {
+      console.log("complete");
+    }
   },
 };
 </script>
@@ -74,6 +85,25 @@ export default {
 
     &:active {
       background-color: #5692f3;
+    }
+
+    &:disabled {
+      background-color: rgb(160, 160, 160);
+      cursor: initial;
+    }
+  }
+
+  &--finish {
+    background-color: #42f477;
+    margin-left: auto;
+
+    &:hover,
+    &:focus {
+      background-color: #33c55f;
+    }
+
+    &:active {
+      background-color: #4bc570;
     }
 
     &:disabled {
