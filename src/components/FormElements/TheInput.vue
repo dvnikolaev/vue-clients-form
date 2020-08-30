@@ -1,26 +1,39 @@
 <template>
   <div class="input">
-    <input class="input__input" required/>
+    <input
+      class="input__input"
+      required
+      :value="formValue"
+      @input="changeFormValue($event)"
+    />
     <span class="input__label">{{ label }}</span>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'TheInput',
+  name: "TheInput",
   props: {
     label: {
       type: String,
-      required: true
+      required: true,
+    },
+    formValue: String,
+    fieldName: String
+  },
+  computed: {},
+  methods: {
+    changeFormValue(e) {
+      this.$emit('change:formValue', { fieldName: this.fieldName, formValue: e.target.value.trim() });
     }
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss">
 .input {
   position: relative;
-  margin: 10px 0;
+  margin: 20px 0;
 
   &__input {
     width: 100%;
@@ -47,14 +60,16 @@ export default {
     top: 50%;
     transform: translateY(-50%);
     color: gray;
-    transition: all .2s ease;
-    z-index: 1;
+    transition: all 0.2s ease;
     pointer-events: none;
   }
 
-  &__input:focus + &__label,
-  &__input:valid + &__label {
+  &__input:focus + &__label {
     color: mediumblue;
+    top: 0;
+    font-size: 14px;
+  }
+  &__input:valid + &__label {
     top: 0;
     font-size: 14px;
   }
