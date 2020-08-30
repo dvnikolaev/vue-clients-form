@@ -3,11 +3,16 @@
     <TheSelect
       :multiple="true"
       :optionValues="localGroups"
-      label="Группа клиентов"
+      label="Группа клиентов *"
       :formValue="groups"
       fieldName="groups"
       @change:formValue="changeFormValue"
     />
+    <span 
+      class="input__err"
+      v-if="!$v.groups.required && $v.groups.$dirty">
+      Данное поле необходимо заполнить
+    </span>
     <TheSelect
       :optionValues="doctors"
       :formValue="doctor"
@@ -25,6 +30,8 @@
 </template>
 
 <script>
+import { required } from "vuelidate/lib/validators";
+
 import TheSelect from "../../FormElements/Select/TheSelect";
 import TheCheckbox from "../../FormElements/TheCheckbox";
 
@@ -39,6 +46,11 @@ export default {
       localGroups: ["VIP", "Проблемные", "ОМС"],
       doctors: ["Иванов", "Захаров", "Чернышева"],
     };
+  },
+  validations: {
+    groups: {
+      required
+    }
   },
   methods: {
     changeFormValue({ fieldName, formValue }) {
