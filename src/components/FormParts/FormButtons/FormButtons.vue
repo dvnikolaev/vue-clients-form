@@ -7,10 +7,12 @@
     >
       Назад
     </button>
+    <span class="count-page">{{ activePage }} из 6</span>
     <button
       class="button button--next"
       @click="toNextPage"
       v-if="activePage < 6"
+      :disabled="isDisable"
     >
       Далее
     </button>
@@ -21,6 +23,7 @@
 export default {
   props: {
     activePage: Number,
+    isDisable: Boolean
   },
   methods: {
     toPrevPage() {
@@ -36,7 +39,7 @@ export default {
 <style lang="scss">
 .page__buttons {
   display: flex;
-  margin-top: auto;
+  margin-top: 30px;
 }
 .button {
   padding: 10px 15px;
@@ -72,6 +75,17 @@ export default {
     &:active {
       background-color: #5692f3;
     }
+
+    &:disabled {
+      background-color: rgb(160, 160, 160);
+      cursor: initial;
+    }
   }
+}
+.count-page {
+  align-self: center;
+  margin-left: auto;
+  font-size: 14px;
+  color: gray;
 }
 </style>
