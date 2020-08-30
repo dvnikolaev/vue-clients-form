@@ -25,12 +25,22 @@
         :home="formValues.home"
         @change:formValue="changeFormValue"
       />
+      <TheDocument
+        v-if="activePage == 5"
+        :documentType="formValues.documentType"
+        :series="formValues.series"
+        :number="formValues.number"
+        :division="formValues.division"
+        :issueDate="formValues.issueDate"
+        @change:formValue="changeFormValue"
+      />
     </form>
     <FormButtons
       :activePage="activePage"
       @change:toPrevPage="toPrevPage"
       @change:toNextPage="toNextPage"
       :isDisable="isDisable"
+      :isDisableFinishButton="isDisableFinishButton"
     />
     <span class="form__text">* - поля необходимые для заполнения</span>
   </div>
@@ -46,6 +56,7 @@ import {
 
 import TheClientInfo from "./FormParts/ClientInfo/TheClientInfo";
 import TheAddress from "./FormParts/Address/TheAddress";
+import TheDocument from "./FormParts/Document/TheDocument";
 import FormButtons from "./FormParts/FormButtons/FormButtons";
 
 const isSevenFirst = (value) => value.indexOf(7) == 0;
@@ -54,7 +65,7 @@ export default {
   name: "TheForm",
   data() {
     return {
-      activePage: 4,
+      activePage: 1,
       formValues: {
         firstName: "",
         lastName: "",
@@ -70,7 +81,12 @@ export default {
         region: "",
         city: "",
         street: "",
-        home: ""
+        home: "",
+        documentType: "",
+        series: "",
+        number: "",
+        division: "",
+        issueDate: "",
       },
     };
   },
@@ -93,11 +109,17 @@ export default {
         isSevenFirst,
       },
       groups: {
-        required
+        required,
       },
       city: {
-        required
-      }
+        required,
+      },
+      documentType: {
+        required,
+      },
+      issueDate: {
+        required,
+      },
     },
   },
   computed: {
@@ -118,9 +140,12 @@ export default {
         case 3:
           return this.$v.formValues.groups.$invalid ? true : false;
         case 4:
-          return this.$v.formValues.city.$invalid ? true : false
+          return this.$v.formValues.city.$invalid ? true : false;
       }
     },
+    isDisableFinishButton() {
+      return this.$v.$invalid;
+    }
   },
   methods: {
     toPrevPage() {
@@ -140,6 +165,7 @@ export default {
   components: {
     TheClientInfo,
     TheAddress,
+    TheDocument,
     FormButtons,
   },
 };
