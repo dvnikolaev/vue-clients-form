@@ -14,7 +14,12 @@
       :gender="gender"
       @change:formValue="changeFormValue"
     />
-    <MedInfo v-if="activePage === 3" />
+    <MedInfo 
+      v-if="activePage === 3"
+      :groups="groups"
+      :doctor="doctor"
+      @change:formValue="changeFormValue"
+    />
   </div>
 </template>
 
@@ -31,7 +36,9 @@ export default {
     middleName: String,
     birthday: String,
     phone: String,
-    gender: String
+    gender: String,
+    groups: String,
+    doctor: String
   },
   methods: {
     changeFormValue({ fieldName, formValue }) {
