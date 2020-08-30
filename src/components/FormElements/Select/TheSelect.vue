@@ -6,7 +6,8 @@
       class="input__input input__select"
       @click="toogleOptions"
       @keydown.space="toogleOptions"
-      v-model="values"
+      :value="formValue"
+      @change="asdasd($event)"
       v-click-outside:[optionValues]="hideOptions"
     />
     <span class="input__label" :class="classLabelActive">
@@ -42,6 +43,8 @@ export default {
       type: Boolean,
       default: false,
     },
+    formValue: String,
+    fieldName: String,
   },
   data() {
     return {
@@ -51,21 +54,8 @@ export default {
     };
   },
   computed: {
-    getActiveValue() {
-      return !this.multiple ? this.activeValue : this.multipleActiveValues;
-    },
-    values: {
-      get() {
-        return this.getActiveValue;
-      },
-      set(val) {
-        this.$emit('asdasd', val)
-      }
-    },
     classLabelActive() {
-      return this.activeValue || this.multipleActiveValues.length
-        ? "input__label--isUp"
-        : "";
+      return this.formValue ? "input__label--isUp" : "";
     },
   },
   methods: {
@@ -73,7 +63,10 @@ export default {
       this.isShowOptions = !this.isShowOptions;
     },
     setActiveValue(value) {
-      this.activeValue = value;
+      this.$emit("change:formValue", {
+        fieldName: this.fieldName,
+        formValue: value,
+      });
       this.isShowOptions = false;
     },
     pushActiveValues(value) {
@@ -88,6 +81,14 @@ export default {
     },
     hideOptions() {
       this.isShowOptions = false;
+    },
+  },
+  watch: {
+    multipleActiveValues(newValue) {
+      this.$emit("change:formValue", {
+        fieldName: this.fieldName,
+        formValue: newValue.join(","),
+      });
     },
   },
   components: {
