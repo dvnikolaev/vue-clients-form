@@ -12,6 +12,7 @@
         :gender="formValues.gender"
         :groups="formValues.groups"
         :doctor="formValues.doctor"
+        :isSendSMS="formValues.isSendSMS"
         @change:formValue="changeFormValue"/>
       <!-- <TheInput :label="'Имя'" /> -->
       <!-- <TheSelect :optionValues="gender" label="Пол" :multiple="true"/> -->
@@ -46,7 +47,8 @@ export default {
         phone: '',
         gender: '',
         groups: "",
-        doctor: ''
+        doctor: '',
+        isSendSMS: false
       }
     };
   },

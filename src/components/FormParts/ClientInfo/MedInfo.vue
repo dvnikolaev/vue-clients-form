@@ -13,8 +13,14 @@
       :formValue="doctor"
       fieldName="doctor"
       label="Лечащий врач"
-      @change:formValue="changeFormValue" />
-    <TheCheckbox label="Не отправлять СМС" />
+      @change:formValue="changeFormValue"
+    />
+    <TheCheckbox
+      label="Не отправлять СМС"
+      :formValue="isSendSMS"
+      fieldName="isSendSMS"
+      @change:formValue="changeFormValue"
+    />
   </div>
 </template>
 
@@ -26,6 +32,7 @@ export default {
   props: {
     groups: String,
     doctor: String,
+    isSendSMS: Boolean,
   },
   data() {
     return {
@@ -36,7 +43,7 @@ export default {
   methods: {
     changeFormValue({ fieldName, formValue }) {
       this.$emit("change:formValue", { fieldName, formValue });
-    }
+    },
   },
   components: {
     TheSelect,
