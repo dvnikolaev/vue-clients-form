@@ -18,6 +18,7 @@
       v-if="activePage === 3"
       :groups="groups"
       :doctor="doctor"
+      :isSendSMS="isSendSMS"
       @change:formValue="changeFormValue"
     />
   </div>
@@ -38,7 +39,8 @@ export default {
     phone: String,
     gender: String,
     groups: String,
-    doctor: String
+    doctor: String,
+    isSendSMS: Boolean
   },
   methods: {
     changeFormValue({ fieldName, formValue }) {
