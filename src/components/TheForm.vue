@@ -1,48 +1,53 @@
 <template>
-  <div class="form__wrapper">
-    <h2 class="form__header">Регистрация клиента</h2>
-    <form @submit.prevent="">
-      <TheClientInfo
+  <div class="page__form">
+    <div class="form__wrapper" v-if="!isCompleteSignUp">
+      <h2 class="form__header">Регистрация клиента</h2>
+      <form @submit.prevent="">
+        <TheClientInfo
+          :activePage="activePage"
+          :firstName="formValues.firstName"
+          :lastName="formValues.lastName"
+          :middleName="formValues.middleName"
+          :birthday="formValues.birthday"
+          :phone="formValues.phone"
+          :gender="formValues.gender"
+          :groups="formValues.groups"
+          :doctor="formValues.doctor"
+          :isSendSMS="formValues.isSendSMS"
+          @change:formValue="changeFormValue"
+        />
+        <TheAddress
+          v-if="activePage == 4"
+          :index="formValues.index"
+          :country="formValues.country"
+          :region="formValues.region"
+          :city="formValues.city"
+          :street="formValues.street"
+          :home="formValues.home"
+          @change:formValue="changeFormValue"
+        />
+        <TheDocument
+          v-if="activePage == 5"
+          :documentType="formValues.documentType"
+          :series="formValues.series"
+          :number="formValues.number"
+          :division="formValues.division"
+          :issueDate="formValues.issueDate"
+          @change:formValue="changeFormValue"
+        />
+      </form>
+      <FormButtons
         :activePage="activePage"
-        :firstName="formValues.firstName"
-        :lastName="formValues.lastName"
-        :middleName="formValues.middleName"
-        :birthday="formValues.birthday"
-        :phone="formValues.phone"
-        :gender="formValues.gender"
-        :groups="formValues.groups"
-        :doctor="formValues.doctor"
-        :isSendSMS="formValues.isSendSMS"
-        @change:formValue="changeFormValue"
+        @change:toPrevPage="toPrevPage"
+        @change:toNextPage="toNextPage"
+        @update:completeSignUp="completeSignUp"
+        :isDisable="isDisable"
+        :isDisableFinishButton="isDisableFinishButton"
+        v-if="!isCompleteSignUp"
       />
-      <TheAddress
-        v-if="activePage == 4"
-        :index="formValues.index"
-        :country="formValues.country"
-        :region="formValues.region"
-        :city="formValues.city"
-        :street="formValues.street"
-        :home="formValues.home"
-        @change:formValue="changeFormValue"
-      />
-      <TheDocument
-        v-if="activePage == 5"
-        :documentType="formValues.documentType"
-        :series="formValues.series"
-        :number="formValues.number"
-        :division="formValues.division"
-        :issueDate="formValues.issueDate"
-        @change:formValue="changeFormValue"
-      />
-    </form>
-    <FormButtons
-      :activePage="activePage"
-      @change:toPrevPage="toPrevPage"
-      @change:toNextPage="toNextPage"
-      :isDisable="isDisable"
-      :isDisableFinishButton="isDisableFinishButton"
-    />
-    <span class="form__text">* - поля необходимые для заполнения</span>
+      <span class="form__text">* - поля необходимые для заполнения</span>
+    </div>
+    <SignUpComplete v-else />
   </div>
 </template>
 
@@ -58,6 +63,7 @@ import TheClientInfo from "./FormParts/ClientInfo/TheClientInfo";
 import TheAddress from "./FormParts/Address/TheAddress";
 import TheDocument from "./FormParts/Document/TheDocument";
 import FormButtons from "./FormParts/FormButtons/FormButtons";
+import SignUpComplete from "./SignUpComplete";
 
 const isSevenFirst = (value) => value.indexOf(7) == 0;
 
@@ -88,6 +94,7 @@ export default {
         division: "",
         issueDate: "",
       },
+      isCompleteSignUp: false,
     };
   },
   validations: {
@@ -145,7 +152,7 @@ export default {
     },
     isDisableFinishButton() {
       return this.$v.$invalid;
-    }
+    },
   },
   methods: {
     toPrevPage() {
@@ -161,24 +168,35 @@ export default {
     changeFormValue({ fieldName, formValue }) {
       this.formValues[fieldName] = formValue;
     },
+    completeSignUp() {
+      if (!this.$v.$invalid) {
+        this.isCompleteSignUp = true;
+      }
+    },
   },
   components: {
     TheClientInfo,
     TheAddress,
     TheDocument,
     FormButtons,
+    SignUpComplete,
   },
 };
 </script>
 
 <style lang="scss">
-.form__wrapper {
-  display: flex;
-  flex-direction: column;
+.page__form {
+  display:flex;
+  align-items: center;
   background-color: white;
   border-radius: 10px;
   min-height: 350px;
   width: 500px;
+}
+.form__wrapper {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
   padding: 25px;
 }
 .form__header {
