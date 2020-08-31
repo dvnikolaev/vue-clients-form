@@ -41,7 +41,7 @@ export default {
       this.$emit("change:toNextPage");
     },
     completeSignUp() {
-      console.log("complete");
+      this.$emit('update:completeSignUp');
     }
   },
 };
