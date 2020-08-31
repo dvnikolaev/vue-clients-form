@@ -3,7 +3,8 @@ import App from "./App.vue";
 import Vuelidate from 'vuelidate';
 
 Vue.use(Vuelidate);
-Vue.config.productionTip = true;
+Vue.config.productionTip = false;
+Vue.config.devtools = true;
 
 Vue.directive("click-outside", {
   bind(el, binding, vnode) {
