@@ -42,11 +42,6 @@ export default {
     lastName: String,
     middleName: String,
   },
-  data() {
-    return {
-      kolo: "",
-    };
-  },
   methods: {
     changeFormValue({ fieldName, formValue }) {
       this.$v[fieldName] ? this.$v[fieldName].$touch() : null;
